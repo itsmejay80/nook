@@ -37,14 +37,6 @@ jobs:
       - name: Typecheck
         run: bun run typecheck
 
-      - name: Build renderer
-        working-directory: apps/renderer
-        run: bun run build
-
-      - name: Build desktop (main + preload)
-        working-directory: apps/desktop
-        run: bun run build
-
       - name: Build and publish
         working-directory: apps/desktop
         env:
