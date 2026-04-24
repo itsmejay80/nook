@@ -1,0 +1,15 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "lib": ["ES2023"],
+    "types": ["node"],
+    "paths": {
+      "@nook/contracts": ["../../packages/contracts/src/index.ts"],
+      "@nook/db": ["../../packages/db/src/index.ts"]
+    }
+  },
+  "include": ["src", "scripts"]
+}

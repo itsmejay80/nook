@@ -1,0 +1,62 @@
+# Dependencies
+node_modules/
+.pnp/
+.pnp.js
+
+# Build output
+dist/
+dist-electron/
+build/
+out/
+release/
+*.tsbuildinfo
+
+# Caches
+.turbo/
+.cache/
+.vite/
+.parcel-cache/
+.oxlintcache
+
+# Test / coverage
+coverage/
+*.lcov
+
+# Logs
+*.log
+
+# Env
+.env
+.env.*
+!.env.example
+
+# Editors
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Bun
+.bun/
+bun.lockb.backup
+
+# Electron / native
+*.node
+electron-builder.env
+
+# SQLite local dev artifacts
+*.sqlite
+*.sqlite-journal
+*.sqlite-wal
+*.sqlite-shm
+*.db
+*.db-journal
+
+# User scratch
+ig_*.png

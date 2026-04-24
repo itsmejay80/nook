@@ -1,0 +1,460 @@
+@import 'tailwindcss';
+
+@import '@fontsource-variable/fraunces/index.css';
+@import '@fontsource-variable/instrument-sans/index.css';
+@import '@fontsource-variable/inter/index.css';
+@import '@fontsource-variable/jetbrains-mono/index.css';
+
+:root {
+  /* Font stacks per font id */
+  --font-instrument-sans: 'Instrument Sans Variable', 'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-fraunces: 'Fraunces Variable', 'Fraunces', ui-serif, Georgia, serif;
+  --font-inter: 'Inter Variable', 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-jetbrains-mono: 'JetBrains Mono Variable', 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Active fonts — overridden by JS via data attributes */
+  --font-body: var(--font-instrument-sans);
+  --font-display: var(--font-fraunces);
+  --font-mono: var(--font-jetbrains-mono);
+
+  /* Light theme (default) */
+  --paper: #ffffff;
+  --paper-2: #f5f5f5;
+  --canvas: #fafafa;
+  --card: #ffffff;
+  --card-2: #f7f7f7;
+
+  --ink: #000000;
+  --ink-2: #333333;
+  --ink-3: #737373;
+  --ink-4: #a3a3a3;
+
+  --line: rgba(0, 0, 0, 0.08);
+  --line-2: rgba(0, 0, 0, 0.14);
+  --line-3: rgba(0, 0, 0, 0.3);
+
+  --accent-note: #000000;
+  --accent-todo: #000000;
+  --accent-website: #000000;
+  --accent-document: #000000;
+  --accent-calendar: #000000;
+
+  --code-bg: rgba(0, 0, 0, 0.06);
+  --code-block-bg: #000000;
+  --code-block-ink: #ffffff;
+  --hover-soft: rgba(0, 0, 0, 0.04);
+  --hover-strong: rgba(0, 0, 0, 0.08);
+  --scroll-thumb: rgba(0, 0, 0, 0.18);
+  --scroll-thumb-hover: rgba(0, 0, 0, 0.32);
+
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  --paper: #0d0d0d;
+  --paper-2: #151515;
+  --canvas: #0a0a0a;
+  --card: #161616;
+  --card-2: #1d1d1d;
+
+  --ink: #f5f5f5;
+  --ink-2: #cfcfcf;
+  --ink-3: #8f8f8f;
+  --ink-4: #5c5c5c;
+
+  --line: rgba(255, 255, 255, 0.08);
+  --line-2: rgba(255, 255, 255, 0.14);
+  --line-3: rgba(255, 255, 255, 0.3);
+
+  --accent-note: #f5f5f5;
+  --accent-todo: #f5f5f5;
+  --accent-website: #f5f5f5;
+  --accent-document: #f5f5f5;
+  --accent-calendar: #f5f5f5;
+
+  --code-bg: rgba(255, 255, 255, 0.08);
+  --code-block-bg: #000000;
+  --code-block-ink: #f5f5f5;
+  --hover-soft: rgba(255, 255, 255, 0.05);
+  --hover-strong: rgba(255, 255, 255, 0.10);
+  --scroll-thumb: rgba(255, 255, 255, 0.18);
+  --scroll-thumb-hover: rgba(255, 255, 255, 0.32);
+
+  color-scheme: dark;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.drag {
+  -webkit-app-region: drag;
+}
+
+.no-drag {
+  -webkit-app-region: no-drag;
+}
+
+.font-display {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+}
+.font-body {
+  font-family: var(--font-body);
+}
+
+.accent-note {
+  background: var(--accent-note);
+}
+.accent-todo {
+  background: var(--accent-todo);
+}
+.accent-website {
+  background: var(--accent-website);
+}
+.accent-document {
+  background: var(--accent-document);
+}
+.accent-calendar {
+  background: var(--accent-calendar);
+}
+
+/* ---- Global sharpen ---- */
+*,
+*::before,
+*::after {
+  border-radius: 0 !important;
+}
+
+/* ---- Note editor ---- */
+.nook-note {
+  font-family: var(--font-body);
+  color: var(--ink);
+}
+.nook-note p {
+  margin: 0 0 0.6rem 0;
+  line-height: 1.65;
+}
+.nook-note h1 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.6rem;
+  letter-spacing: -0.02em;
+  margin: 1rem 0 0.45rem;
+  line-height: 1.1;
+}
+.nook-note h2 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.22rem;
+  letter-spacing: -0.015em;
+  margin: 0.8rem 0 0.35rem;
+  line-height: 1.2;
+}
+.nook-note ul,
+.nook-note ol {
+  padding-left: 1.35rem;
+  margin: 0 0 0.6rem 0;
+}
+.nook-note ul {
+  list-style: disc;
+}
+.nook-note ol {
+  list-style: decimal;
+}
+.nook-note li > p {
+  margin: 0;
+}
+.nook-note blockquote {
+  border-left: 2px solid var(--ink-3);
+  padding: 0 0 0 0.9rem;
+  color: var(--ink-2);
+  font-family: var(--font-display);
+  font-style: italic;
+  margin: 0.25rem 0 0.7rem 0;
+}
+.nook-note code {
+  background: var(--code-bg);
+  padding: 0.05rem 0.35rem;
+  font-size: 0.85em;
+  font-family: var(--font-mono);
+}
+.nook-note pre {
+  background: var(--code-block-bg);
+  color: var(--code-block-ink);
+  padding: 0.9rem 1rem;
+  overflow-x: auto;
+  font-size: 0.82rem;
+  line-height: 1.55;
+}
+.nook-note pre code {
+  background: transparent;
+  color: inherit;
+  padding: 0;
+}
+
+.nook-code-block {
+  position: relative;
+  margin: 0.6rem 0;
+}
+.nook-code-block .nook-code-lang {
+  position: absolute;
+  top: 0.4rem;
+  right: 0.5rem;
+  appearance: none;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--code-block-ink);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  padding: 0.1rem 0.4rem;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 120ms ease;
+}
+.nook-code-block:hover .nook-code-lang,
+.nook-code-block .nook-code-lang:focus {
+  opacity: 1;
+}
+.nook-code-block .nook-code-lang option {
+  background: #1a1a1a;
+  color: #f5f5f5;
+}
+
+.nook-note pre code .hljs-comment,
+.nook-note pre code .hljs-quote {
+  color: #7c7c7c;
+  font-style: italic;
+}
+.nook-note pre code .hljs-keyword,
+.nook-note pre code .hljs-selector-tag,
+.nook-note pre code .hljs-literal,
+.nook-note pre code .hljs-section,
+.nook-note pre code .hljs-link {
+  color: #c792ea;
+}
+.nook-note pre code .hljs-string,
+.nook-note pre code .hljs-attr,
+.nook-note pre code .hljs-template-tag,
+.nook-note pre code .hljs-template-variable,
+.nook-note pre code .hljs-addition {
+  color: #c3e88d;
+}
+.nook-note pre code .hljs-number,
+.nook-note pre code .hljs-symbol,
+.nook-note pre code .hljs-bullet,
+.nook-note pre code .hljs-meta {
+  color: #f78c6c;
+}
+.nook-note pre code .hljs-title,
+.nook-note pre code .hljs-name,
+.nook-note pre code .hljs-selector-id,
+.nook-note pre code .hljs-selector-class {
+  color: #82aaff;
+}
+.nook-note pre code .hljs-type,
+.nook-note pre code .hljs-class .hljs-title,
+.nook-note pre code .hljs-built_in,
+.nook-note pre code .hljs-builtin-name {
+  color: #ffcb6b;
+}
+.nook-note pre code .hljs-variable,
+.nook-note pre code .hljs-regexp,
+.nook-note pre code .hljs-attribute,
+.nook-note pre code .hljs-tag {
+  color: #f07178;
+}
+.nook-note pre code .hljs-deletion {
+  color: #ff5370;
+}
+.nook-note pre code .hljs-emphasis {
+  font-style: italic;
+}
+.nook-note pre code .hljs-strong {
+  font-weight: 600;
+}
+.nook-note p.is-editor-empty:first-child::before {
+  color: var(--ink-4);
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
+
+/* ---- Scrollbars ---- */
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+*::-webkit-scrollbar-thumb {
+  background: var(--scroll-thumb);
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--scroll-thumb-hover);
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* ---- Dockview: editorial, flush, hairline ---- */
+.dockview-theme-light {
+  --dv-paneview-active-outline-color: var(--ink);
+  --dv-tabs-and-actions-container-font-size: 11px;
+  --dv-tabs-and-actions-container-height: 44px;
+  --dv-tab-font-size: 10.5px;
+  --dv-border-radius: 0px;
+  --dv-tab-margin: 0;
+  --dv-drag-over-background-color: var(--hover-strong);
+  --dv-drag-over-border-color: var(--ink);
+  --dv-tabs-container-scrollbar-color: var(--scroll-thumb);
+  --dv-icon-hover-background-color: var(--hover-soft);
+  --dv-floating-box-shadow: 0 0 0 1px var(--line-2);
+  --dv-overlay-z-index: 999;
+  --dv-sash-color: var(--line);
+  --dv-active-sash-color: var(--ink);
+  --dv-active-sash-transition-duration: 0.1s;
+  --dv-active-sash-transition-delay: 0.2s;
+  --dv-scrollbar-background-color: var(--scroll-thumb);
+
+  --dv-group-view-background-color: var(--card);
+  --dv-tabs-and-actions-container-background-color: var(--paper-2);
+  --dv-activegroup-visiblepanel-tab-background-color: var(--card);
+  --dv-activegroup-hiddenpanel-tab-background-color: var(--paper-2);
+  --dv-inactivegroup-visiblepanel-tab-background-color: var(--card-2);
+  --dv-inactivegroup-hiddenpanel-tab-background-color: var(--paper-2);
+  --dv-tab-divider-color: var(--line);
+  --dv-activegroup-visiblepanel-tab-color: var(--ink);
+  --dv-activegroup-hiddenpanel-tab-color: var(--ink-3);
+  --dv-inactivegroup-visiblepanel-tab-color: var(--ink-2);
+  --dv-inactivegroup-hiddenpanel-tab-color: var(--ink-4);
+  --dv-separator-border: var(--line);
+  --dv-paneview-header-border-color: var(--line);
+}
+
+.dockview-theme-light .dv-tabs-and-actions-container {
+  background: var(--paper-2);
+  border-bottom: 1px solid var(--line);
+  padding: 0;
+}
+
+.dockview-theme-light .dv-tabs-container {
+  gap: 0;
+}
+
+.dockview-theme-light .dv-tab {
+  height: 44px;
+  padding: 0 18px;
+  border-radius: 0 !important;
+  font-family: var(--font-body);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-size: 10px;
+  border-right: 1px solid var(--line);
+  transition: background-color 0.14s ease, color 0.14s ease;
+  position: relative;
+}
+
+.dockview-theme-light .dv-tab.dv-active-tab {
+  background: var(--card);
+  color: var(--ink);
+}
+
+.dockview-theme-light .dv-tab.dv-active-tab::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 1px;
+  background: var(--card);
+}
+
+.dockview-theme-light .dv-groupview.dv-active-group
+  > .dv-tabs-and-actions-container
+  .dv-tab.dv-active-tab::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 1px;
+  background: var(--ink);
+}
+
+.dockview-theme-light .dv-tab.dv-inactive-tab {
+  background: var(--paper-2);
+  color: var(--ink-3);
+}
+
+.dockview-theme-light .dv-tab.dv-inactive-tab:hover {
+  background: var(--paper);
+  color: var(--ink-2);
+}
+
+.dockview-theme-light .dv-default-tab-content {
+  font-family: var(--font-body);
+}
+
+.dockview-theme-light .dv-default-tab-action {
+  margin-left: 12px;
+  width: 14px;
+  height: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.14s ease, background-color 0.14s ease;
+  border-radius: 0 !important;
+}
+.dockview-theme-light .dv-tab:hover .dv-default-tab-action,
+.dockview-theme-light .dv-tab.dv-active-tab .dv-default-tab-action {
+  opacity: 0.5;
+}
+.dockview-theme-light .dv-tab:hover .dv-default-tab-action:hover,
+.dockview-theme-light .dv-tab.dv-active-tab .dv-default-tab-action:hover {
+  opacity: 1;
+  background: var(--hover-strong);
+}
+
+/* Hide the noisy per-group overflow dropdown; dockview shows it even for single tabs. */
+.dockview-theme-light .dv-tabs-overflow-dropdown-default,
+.dockview-theme-light .dv-pre-actions-container,
+.dockview-theme-light .dv-right-actions-container {
+  display: none;
+}
+
+.dockview-theme-light .dv-groupview > .dv-content-container {
+  background: var(--card);
+  border-radius: 0;
+  margin: 0;
+  box-shadow: none;
+  border: none;
+}
+
+.dockview-theme-light .dv-split-view-container > .dv-sash-container > .dv-sash {
+  background: transparent;
+  transition: background-color 0.14s ease;
+}
+.dockview-theme-light .dv-split-view-container > .dv-sash-container > .dv-sash:hover {
+  background: var(--line-2);
+}
+
+/* ---- Accent dots ---- */
+.accent-dot-note,
+.accent-dot-todo,
+.accent-dot-website,
+.accent-dot-document,
+.accent-dot-calendar {
+  background: var(--ink);
+  display: inline-block;
+}
