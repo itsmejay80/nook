@@ -1,6 +1,6 @@
 {
   "name": "@nook/desktop",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Nook — local-first, spatial workboard desktop app.",
   "author": {
     "name": "Jayesh Patel",
@@ -29,6 +29,7 @@
     "appId": "com.itsmejay.nook",
     "productName": "Nook",
     "artifactName": "${productName}-${version}-${arch}.${ext}",
+    "afterPack": "build/afterPack.cjs",
     "directories": {
       "output": "release",
       "buildResources": "build"
