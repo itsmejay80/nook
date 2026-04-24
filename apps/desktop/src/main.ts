@@ -297,7 +297,10 @@ function createWindow(): BrowserWindow {
   if (isDev && DEV_SERVER_URL) {
     win.loadURL(DEV_SERVER_URL);
   } else {
-    win.loadFile(path.join(__dirname, '../../renderer/dist/index.html'));
+    const rendererIndex = app.isPackaged
+      ? path.join(__dirname, '..', 'renderer-dist', 'index.html')
+      : path.join(__dirname, '../../renderer/dist/index.html');
+    win.loadFile(rendererIndex);
   }
 
   return win;

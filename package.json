@@ -13,7 +13,9 @@
     "typecheck": "turbo run typecheck",
     "lint": "oxlint .",
     "format": "oxfmt .",
-    "test": "turbo run test"
+    "test": "turbo run test",
+    "package:mac": "turbo run build --filter=@nook/renderer --filter=@nook/desktop && bun --filter @nook/desktop run dist",
+    "release:mac": "turbo run build --filter=@nook/renderer --filter=@nook/desktop && bun --filter @nook/desktop run release"
   },
   "devDependencies": {
     "@types/node": "^25.6.0",
