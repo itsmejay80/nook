@@ -1,0 +1,48 @@
+name: release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+  workflow_dispatch:
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: macos-latest
+            script: release:mac
+          - os: windows-latest
+            script: release:win
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Typecheck
+        run: bun run typecheck
+
+      - name: Build renderer
+        run: bun --cwd apps/renderer run build
+
+      - name: Build and publish
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SCRIPT: ${{ matrix.script }}
+        run: bun --cwd apps/desktop run "$SCRIPT"
+        shell: bash
