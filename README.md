@@ -38,19 +38,45 @@ packages/
 
 The app's data directory (SQLite + per-space files) lives under Electron's per-user data dir (`app.getPath('userData')`) — never inside the repo.
 
-## Prerequisites
+## Install (end users)
+
+### macOS — Homebrew (recommended)
+
+```sh
+brew install --cask itsmejay80/tap/nook
+```
+
+The cask strips macOS's quarantine attribute on install so the app opens without a Gatekeeper prompt.
+
+### macOS — direct DMG
+
+Download the `.dmg` from [Releases](https://github.com/itsmejay80/nook/releases), drag **Nook.app** to `/Applications`, then run:
+
+```sh
+xattr -dr com.apple.quarantine /Applications/Nook.app
+```
+
+This is required because Nook is ad-hoc signed but not Apple-notarized. Without it, macOS shows *"Apple could not verify Nook is free of malware…"* and blocks launch. Alternatively: right-click **Nook.app** → **Open** → **Open Anyway**.
+
+### Windows
+
+Download and run the NSIS installer (`Nook-Setup-<version>.exe`) from [Releases](https://github.com/itsmejay80/nook/releases).
+
+## Develop
+
+### Prerequisites
 
 - Node.js ≥ 20 (matches `.nvmrc`)
 - Bun ≥ 1.3
 - macOS, Windows, or Linux desktop with a display
 
-## Install
+### Install deps
 
 ```sh
 bun install
 ```
 
-## Develop
+### Run dev
 
 ```sh
 bun dev
