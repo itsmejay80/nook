@@ -72,7 +72,7 @@ export function AddCardButton({ spaceId, collapsed = false }: AddCardButtonProps
       key={type}
       type="button"
       onClick={() => handlePick(type)}
-      className="group flex w-full items-center gap-3 border-b border-[var(--line)] px-5 py-3 text-left text-[13px] text-[var(--ink-2)] transition-colors last:border-b-0 hover:bg-[var(--card-2)] hover:text-[var(--ink)]"
+      className="group flex w-full items-center gap-3 px-4 py-2.5 text-left text-[13px] text-[var(--ink-2)] transition-colors hover:bg-[var(--hover-soft)] hover:text-[var(--ink)]"
     >
       <Icon className="h-3.5 w-3.5 shrink-0" style={{ color: accent }} strokeWidth={1.75} />
       <span>{label}</span>
@@ -80,20 +80,18 @@ export function AddCardButton({ spaceId, collapsed = false }: AddCardButtonProps
   ));
 
   return (
-    <div ref={rootRef} className="relative border-t border-[var(--line)]">
+    <div ref={rootRef} className="relative p-2">
       <button
         ref={buttonRef}
         type="button"
         disabled={!spaceId}
         onClick={() => setOpen((v) => !v)}
         aria-label="Add card"
-        className="grid h-11 w-full grid-cols-[2.5rem_1fr] items-center overflow-hidden whitespace-nowrap text-[var(--ink-3)] transition-colors hover:bg-[var(--hover-soft)] hover:text-[var(--ink)] disabled:opacity-50"
+        className="flex h-9 w-full items-center gap-3 rounded-md px-3 whitespace-nowrap text-[var(--ink-3)] transition-colors hover:bg-[var(--hover-soft)] hover:text-[var(--ink)] disabled:opacity-50"
       >
-        <span className="flex h-full w-10 items-center justify-center">
-          <Plus className="h-3.5 w-3.5" strokeWidth={1.75} />
-        </span>
+        <Plus className="h-3.5 w-3.5 shrink-0" strokeWidth={1.75} />
         <span
-          className={`min-w-0 pr-5 text-left text-[10px] font-medium tracking-[0.32em] uppercase ${
+          className={`min-w-0 text-left text-[13px] font-medium ${
             collapsed ? 'opacity-0' : 'opacity-100'
           }`}
         >
@@ -101,7 +99,7 @@ export function AddCardButton({ spaceId, collapsed = false }: AddCardButtonProps
         </span>
       </button>
       {open && !collapsed && (
-        <div className="absolute right-0 bottom-11 left-0 z-10 overflow-hidden border border-[var(--line-2)] bg-[var(--card)] shadow-[0_-8px_24px_-16px_rgba(0,0,0,0.2)]">
+        <div className="absolute right-2 bottom-full left-2 z-10 mb-1 overflow-hidden rounded-lg border border-[var(--line-2)] bg-[var(--card)] shadow-[0_-8px_24px_-16px_rgba(0,0,0,0.25)]">
           {menuItems}
         </div>
       )}
@@ -115,7 +113,7 @@ export function AddCardButton({ spaceId, collapsed = false }: AddCardButtonProps
               top: portalPos.top,
               transform: 'translateY(-100%)',
             }}
-            className="z-50 w-44 overflow-hidden border border-[var(--line-2)] bg-[var(--card)] shadow-[0_8px_24px_-16px_rgba(0,0,0,0.2)]"
+            className="z-50 w-44 overflow-hidden rounded-lg border border-[var(--line-2)] bg-[var(--card)] shadow-[0_8px_24px_-16px_rgba(0,0,0,0.2)]"
           >
             {menuItems}
           </div>,

@@ -1,13 +1,60 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   DockviewReact,
   type DockviewApi,
   type DockviewReadyEvent,
+  type IDockviewPanelHeaderProps,
   type IDockviewPanelProps,
 } from 'dockview';
-import type { Card, CardType } from '@nook/contracts';
+import { Trash2 } from 'lucide-react';
+import type { Card, CardType, TodoData, WebsiteData } from '@nook/contracts';
 import { useCards } from '../stores/cards.js';
 import { CardShell } from './CardShell.js';
+
+const TYPE_DOT: Record<CardType, string> = {
+  note: 'accent-dot-note',
+  todo: 'accent-dot-todo',
+  website: 'accent-dot-website',
+  document: 'accent-dot-document',
+  calendar: 'accent-dot-calendar',
+};
+
+const TYPE_LABEL: Record<CardType, string> = {
+  note: 'Note',
+  todo: 'Todo',
+  website: 'Website',
+  document: 'Document',
+  calendar: 'Calendar',
+};
+
+const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const fmtDate = (ts: number) => {
+  const d = new Date(ts);
+  return `${MONTHS[d.getMonth()]} ${d.getDate()}`;
+};
+const safeHost = (url: string) => {
+  try { return new URL(url).hostname.replace(/^www\./, ''); } catch { return ''; }
+};
+
+function useCardMeta(card: Card | undefined): string {
+  return useMemo(() => {
+    if (!card) return '';
+    switch (card.type) {
+      case 'note': return fmtDate(card.updatedAt);
+      case 'todo': {
+        const items = Array.isArray((card.data as TodoData | undefined)?.items)
+          ? (card.data as TodoData).items : [];
+        return `${items.filter((i) => i.done).length}/${items.length}`;
+      }
+      case 'website': {
+        const url = (card.data as WebsiteData | undefined)?.url;
+        return url ? safeHost(url) : '';
+      }
+      case 'calendar': return fmtDate(card.updatedAt);
+      case 'document': return '';
+    }
+  }, [card]);
+}
 
 interface CanvasProps {
   spaceId: string;
@@ -41,7 +88,7 @@ function CardPanel(props: IDockviewPanelProps<PanelParams>) {
     );
   }
 
-  return <CardShell card={card} onClose={() => props.api.close()} />;
+  return <CardShell card={card} />;
 }
 
 const COMPONENTS = {
@@ -51,6 +98,107 @@ const COMPONENTS = {
   document: CardPanel,
   calendar: CardPanel,
 } as const satisfies Record<CardType, typeof CardPanel>;
+
+function CardTab(props: IDockviewPanelHeaderProps<PanelParams>) {
+  const { cardId } = props.params;
+  const card = useCards((s) => {
+    for (const cards of Object.values(s.bySpace)) {
+      const found = cards.find((c) => c.id === cardId);
+      if (found) return found;
+    }
+    return undefined;
+  });
+  const updateTitle = useCards((s) => s.updateTitle);
+  const remove = useCards((s) => s.remove);
+  const meta = useCardMeta(card);
+
+  const [editing, setEditing] = useState(false);
+  const [draft, setDraft] = useState(card?.title ?? '');
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
+  useEffect(() => { setDraft(card?.title ?? ''); }, [card?.title]);
+
+  useEffect(() => {
+    if (editing) {
+      queueMicrotask(() => {
+        inputRef.current?.focus();
+        inputRef.current?.select();
+      });
+    }
+  }, [editing]);
+
+  const commit = async () => {
+    const trimmed = draft.trim();
+    setEditing(false);
+    if (!card) return;
+    if (trimmed !== card.title) await updateTitle(card.id, trimmed);
+    else setDraft(card.title);
+  };
+
+  const onMouseDown = (e: React.MouseEvent) => {
+    if (e.button === 1) {
+      e.preventDefault();
+      props.api.close();
+    }
+  };
+
+  if (!card) return <div className="nook-tab" />;
+
+  const hasTitle = card.title.trim().length > 0;
+  const typeLabel = TYPE_LABEL[card.type];
+  const displayTitle = hasTitle ? card.title : typeLabel;
+  const dotClass = TYPE_DOT[card.type];
+
+  return (
+    <div className="nook-tab group/tab" onMouseDown={onMouseDown}>
+      <span className={`accent-dot ${dotClass}`} aria-hidden />
+      {editing ? (
+        <input
+          ref={inputRef}
+          value={draft}
+          draggable={false}
+          onMouseDown={(e) => e.stopPropagation()}
+          onChange={(e) => setDraft(e.target.value)}
+          onBlur={() => void commit()}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') void commit();
+            if (e.key === 'Escape') {
+              setDraft(card.title);
+              setEditing(false);
+            }
+          }}
+          placeholder={typeLabel}
+          className="nook-tab-input"
+        />
+      ) : (
+        <button
+          type="button"
+          className={`nook-tab-title ${hasTitle ? '' : 'nook-tab-title-empty'}`}
+          onDoubleClick={(e) => {
+            e.stopPropagation();
+            setEditing(true);
+          }}
+        >
+          {displayTitle}
+        </button>
+      )}
+      <div className="nook-tab-actions" onMouseDown={(e) => e.stopPropagation()}>
+        {meta && <span className="nook-tab-meta">{meta}</span>}
+        <button
+          type="button"
+          className="nook-tab-delete"
+          aria-label="Delete card"
+          onClick={(e) => {
+            e.stopPropagation();
+            void remove(card.id);
+          }}
+        >
+          <Trash2 size={13} strokeWidth={1.75} />
+        </button>
+      </div>
+    </div>
+  );
+}
 
 export function Canvas({ spaceId }: CanvasProps) {
   const cards = useCards((s) => s.bySpace[spaceId] ?? null);
@@ -147,16 +295,19 @@ export function Canvas({ spaceId }: CanvasProps) {
     <DockviewReact
       className="dockview-theme-light h-full w-full"
       components={COMPONENTS}
+      defaultTabComponent={CardTab}
       onReady={onReady}
     />
   );
 }
 
 function addCardPanel(api: DockviewApi, card: Card): void {
+  const activeGroup = api.activeGroup;
   api.addPanel({
     id: card.id,
     component: card.type,
     title: card.title || card.type,
     params: { cardId: card.id } satisfies PanelParams,
+    ...(activeGroup ? { position: { referenceGroup: activeGroup, direction: 'right' } } : {}),
   });
 }

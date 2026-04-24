@@ -13,16 +13,7 @@ interface CardsState {
   get: (id: string) => Card | undefined;
 }
 
-const defaultTitleFor = (type: CardType): string =>
-  type === 'note'
-    ? 'Note'
-    : type === 'todo'
-    ? 'Todo'
-    : type === 'website'
-    ? 'Website'
-    : type === 'document'
-    ? 'Document'
-    : 'Calendar';
+const defaultTitleFor = (_type: CardType): string => '';
 
 export const useCards = create<CardsState>((set, getState) => ({
   bySpace: {},

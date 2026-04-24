@@ -48,56 +48,57 @@ export function Sidebar({ collapsed, onToggleCollapsed }: SidebarProps) {
 
   return (
     <aside
-      className={`relative flex h-full shrink-0 flex-col overflow-hidden border-r border-[var(--line)] bg-[var(--paper-2)] ${
-        collapsed ? 'w-10' : 'w-60'
+      className={`relative flex h-full shrink-0 flex-col overflow-hidden bg-[var(--paper-2)] ${
+        collapsed ? 'w-11' : 'w-60'
       }`}
     >
-      <div
-        className={`flex h-11 shrink-0 items-center ${
-          collapsed ? 'justify-center' : 'justify-end pr-3'
-        }`}
-      >
-        <button
-          type="button"
-          onClick={onToggleCollapsed}
-          className="p-1.5 text-[var(--ink-3)] transition-colors hover:bg-[var(--hover-strong)] hover:text-[var(--ink)]"
-          aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-        >
-          {collapsed ? (
-            <PanelLeftOpen className="h-4 w-4" strokeWidth={1.75} />
-          ) : (
-            <PanelLeftClose className="h-4 w-4" strokeWidth={1.75} />
-          )}
-        </button>
-      </div>
-
       {collapsed ? (
-        <button
-          type="button"
-          onClick={handleAdd}
-          aria-label="Add space"
-          className="flex h-11 w-full shrink-0 items-center justify-center border-t border-b border-[var(--line)] text-[var(--ink-3)] transition-colors hover:bg-[var(--hover-strong)] hover:text-[var(--ink)]"
-        >
-          <Plus className="h-3.5 w-3.5" strokeWidth={1.75} />
-        </button>
-      ) : (
-        <div className="flex h-11 items-center justify-between overflow-hidden border-t border-b border-[var(--line)] px-5 whitespace-nowrap">
-          <div className="flex items-baseline gap-2.5">
-            <span className="text-[10px] font-medium tracking-[0.32em] text-[var(--ink-3)] uppercase">
-              Spaces
-            </span>
-            <span className="text-[9.5px] tracking-[0.2em] tabular-nums text-[var(--ink-4)]">
-              {spaces.length.toString().padStart(2, '0')}
-            </span>
-          </div>
+        <div className="flex flex-col items-center gap-1 px-2 pt-2 pb-1">
+          <button
+            type="button"
+            onClick={onToggleCollapsed}
+            className="flex h-8 w-8 items-center justify-center rounded-md text-[var(--ink-3)] transition-colors hover:bg-[var(--hover-soft)] hover:text-[var(--ink)]"
+            aria-label="Expand sidebar"
+          >
+            <PanelLeftOpen className="h-4 w-4" strokeWidth={1.75} />
+          </button>
           <button
             type="button"
             onClick={handleAdd}
-            className="p-1 text-[var(--ink-3)] transition-colors hover:bg-[var(--hover-strong)] hover:text-[var(--ink)]"
             aria-label="Add space"
+            className="flex h-8 w-8 items-center justify-center rounded-md text-[var(--ink-3)] transition-colors hover:bg-[var(--hover-soft)] hover:text-[var(--ink)]"
           >
             <Plus className="h-3.5 w-3.5" strokeWidth={1.75} />
           </button>
+        </div>
+      ) : (
+        <div className="flex h-9 shrink-0 items-center justify-between pr-2 pl-5 whitespace-nowrap">
+          <div className="flex items-baseline gap-1.5">
+            <span className="text-[10px] font-semibold tracking-[0.18em] text-[var(--ink-3)] uppercase">
+              Spaces
+            </span>
+            <span className="text-[10px] tabular-nums text-[var(--ink-4)]">
+              {spaces.length}
+            </span>
+          </div>
+          <div className="flex items-center gap-0.5">
+            <button
+              type="button"
+              onClick={handleAdd}
+              className="rounded-md p-1.5 text-[var(--ink-3)] transition-colors hover:bg-[var(--hover-soft)] hover:text-[var(--ink)]"
+              aria-label="Add space"
+            >
+              <Plus className="h-3.5 w-3.5" strokeWidth={1.75} />
+            </button>
+            <button
+              type="button"
+              onClick={onToggleCollapsed}
+              className="rounded-md p-1.5 text-[var(--ink-3)] transition-colors hover:bg-[var(--hover-soft)] hover:text-[var(--ink)]"
+              aria-label="Collapse sidebar"
+            >
+              <PanelLeftClose className="h-4 w-4" strokeWidth={1.75} />
+            </button>
+          </div>
         </div>
       )}
 
@@ -107,7 +108,7 @@ export function Sidebar({ collapsed, onToggleCollapsed }: SidebarProps) {
           collapsed ? 'pointer-events-none opacity-0' : 'opacity-100'
         }`}
       >
-        <nav className="flex flex-1 flex-col overflow-y-auto">
+        <nav className="flex flex-1 flex-col gap-px overflow-y-auto px-2 pt-1">
           {spaces.map((space, idx) => (
             <SpaceRow
               key={space.id}
@@ -129,28 +130,29 @@ export function Sidebar({ collapsed, onToggleCollapsed }: SidebarProps) {
         </nav>
       </div>
 
-      <AddCardButton spaceId={selectedId} collapsed={collapsed} />
-
-      <Link
-        to="/settings"
-        aria-label="Settings"
-        className={`grid h-11 shrink-0 grid-cols-[2.5rem_1fr] items-center overflow-hidden border-t border-[var(--line)] whitespace-nowrap transition-colors ${
-          onSettings
-            ? 'bg-[var(--card)] text-[var(--ink)]'
-            : 'text-[var(--ink-3)] hover:bg-[var(--hover-soft)] hover:text-[var(--ink)]'
-        }`}
-      >
-        <span className="flex h-full w-10 items-center justify-center">
-          <SettingsIcon className="h-3.5 w-3.5" strokeWidth={1.75} />
-        </span>
-        <span
-          className={`min-w-0 pr-5 text-[10px] font-medium tracking-[0.32em] uppercase ${
-            collapsed ? 'opacity-0' : 'opacity-100'
-          }`}
-        >
-          Settings
-        </span>
-      </Link>
+      <div className="shrink-0 border-t border-[var(--line)] pt-1 pb-1">
+        <AddCardButton spaceId={selectedId} collapsed={collapsed} />
+        <div className="px-2">
+          <Link
+            to="/settings"
+            aria-label="Settings"
+            className={`flex h-9 items-center gap-3 rounded-md px-3 transition-colors ${
+              onSettings
+                ? 'bg-[var(--hover-strong)] text-[var(--ink)]'
+                : 'text-[var(--ink-3)] hover:bg-[var(--hover-soft)] hover:text-[var(--ink)]'
+            }`}
+          >
+            <SettingsIcon className="h-3.5 w-3.5 shrink-0" strokeWidth={1.75} />
+            <span
+              className={`min-w-0 text-[13px] font-medium ${
+                collapsed ? 'opacity-0' : 'opacity-100'
+              }`}
+            >
+              Settings
+            </span>
+          </Link>
+        </div>
+      </div>
     </aside>
   );
 }
@@ -194,19 +196,16 @@ function SpaceRow({
   }, [editing, space.name]);
 
   const base =
-    'group relative flex h-11 items-center gap-4 border-b border-[var(--line)] pr-3 pl-5 transition-colors duration-150';
+    'group relative flex h-8 items-center gap-3 rounded-md px-3 transition-colors duration-150';
   const tone = selected
-    ? 'bg-[var(--card)] text-[var(--ink)]'
+    ? 'bg-[var(--hover-soft)] text-[var(--ink)] font-medium'
     : 'text-[var(--ink-2)] hover:bg-[var(--hover-soft)] hover:text-[var(--ink)]';
 
   const indexLabel = index.toString().padStart(2, '0');
 
   if (editing) {
     return (
-      <div className={`${base} bg-[var(--card)] text-[var(--ink)]`}>
-        <span className="w-5 shrink-0 text-[9.5px] tracking-[0.2em] tabular-nums text-[var(--ink-4)]">
-          {indexLabel}
-        </span>
+      <div className={`${base} bg-[var(--hover-strong)] text-[var(--ink)]`}>
         <input
           ref={inputRef}
           value={draft}
@@ -216,7 +215,7 @@ function SpaceRow({
             if (e.key === 'Enter') onCommitRename(draft.trim() || space.name);
             if (e.key === 'Escape') onCancelRename();
           }}
-          className="font-display w-full bg-transparent text-[15px] tracking-[-0.01em] outline-none"
+          className="w-full bg-transparent text-[13px] outline-none"
         />
       </div>
     );
@@ -225,6 +224,7 @@ function SpaceRow({
   return (
     <div
       className={`${base} ${tone} cursor-pointer`}
+      data-index={indexLabel}
       onClick={() => (selected ? onStartRename() : onSelect())}
       onDoubleClick={onStartRename}
       role="button"
@@ -239,18 +239,12 @@ function SpaceRow({
       }}
     >
       {selected && (
-        <span className="absolute top-0 left-0 h-full w-[2px] bg-[var(--ink)]" />
+        <span
+          aria-hidden="true"
+          className="absolute top-1/2 left-0 h-4 w-0.5 -translate-y-1/2 rounded-r-full bg-[var(--ink-2)]"
+        />
       )}
-      <span
-        className={`w-5 shrink-0 text-[9.5px] tracking-[0.2em] tabular-nums transition-colors ${
-          selected ? 'text-[var(--ink-3)]' : 'text-[var(--ink-4)]'
-        }`}
-      >
-        {indexLabel}
-      </span>
-      <span className="font-display flex-1 truncate text-[15px] leading-none tracking-[-0.01em]">
-        {space.name}
-      </span>
+      <span className="flex-1 truncate text-[13px] leading-none">{space.name}</span>
       {canDelete && (
         <button
           type="button"
@@ -258,7 +252,7 @@ function SpaceRow({
             e.stopPropagation();
             onDelete();
           }}
-          className="invisible p-1 text-[var(--ink-4)] transition-colors hover:bg-[var(--hover-strong)] hover:text-[var(--ink-2)] group-hover:visible"
+          className="invisible rounded p-1 text-[var(--ink-4)] transition-colors hover:bg-[var(--hover-strong)] hover:text-[var(--ink-2)] group-hover:visible"
           aria-label={`Delete ${space.name}`}
         >
           <Trash2 className="h-3.5 w-3.5" strokeWidth={1.75} />

@@ -20,11 +20,11 @@ function TitleBar() {
 
   return (
     <div
-      className="drag relative flex h-8 w-full select-none items-center justify-center border-b border-[var(--line)] bg-[var(--paper-2)]"
+      className="drag relative flex h-8 w-full select-none items-center justify-center bg-[var(--paper-2)]"
       onDoubleClick={handleDoubleClick}
       title="Double-click to maximize"
     >
-      <span className="text-[10px] font-medium tracking-[0.32em] text-[var(--ink-2)] uppercase">
+      <span className="text-[12px] font-medium tracking-[-0.01em] text-[var(--ink-2)]">
         Nook
       </span>
     </div>

@@ -6,79 +6,81 @@
 @import '@fontsource-variable/jetbrains-mono/index.css';
 
 :root {
-  /* Font stacks per font id */
   --font-instrument-sans: 'Instrument Sans Variable', 'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
   --font-fraunces: 'Fraunces Variable', 'Fraunces', ui-serif, Georgia, serif;
   --font-inter: 'Inter Variable', 'Inter', ui-sans-serif, system-ui, sans-serif;
   --font-jetbrains-mono: 'JetBrains Mono Variable', 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
 
-  /* Active fonts — overridden by JS via data attributes */
-  --font-body: var(--font-instrument-sans);
-  --font-display: var(--font-fraunces);
+  --font-body: var(--font-inter);
+  --font-display: var(--font-inter);
   --font-mono: var(--font-jetbrains-mono);
 
-  /* Light theme (default) */
-  --paper: #ffffff;
-  --paper-2: #f5f5f5;
-  --canvas: #fafafa;
+  --paper: #fbfbfc;
+  --paper-2: #f3f3f5;
+  --canvas: #ededf0;
   --card: #ffffff;
-  --card-2: #f7f7f7;
+  --card-2: #f7f7f9;
 
-  --ink: #000000;
-  --ink-2: #333333;
-  --ink-3: #737373;
-  --ink-4: #a3a3a3;
+  --ink: #0a0a0b;
+  --ink-2: #343438;
+  --ink-3: #72727a;
+  --ink-4: #a7a7ad;
 
-  --line: rgba(0, 0, 0, 0.08);
-  --line-2: rgba(0, 0, 0, 0.14);
-  --line-3: rgba(0, 0, 0, 0.3);
+  --line: rgba(0, 0, 0, 0.06);
+  --line-2: rgba(0, 0, 0, 0.12);
+  --line-3: rgba(0, 0, 0, 0.22);
 
-  --accent-note: #000000;
-  --accent-todo: #000000;
-  --accent-website: #000000;
-  --accent-document: #000000;
-  --accent-calendar: #000000;
+  --accent-note: #60a5fa;
+  --accent-todo: #ec4899;
+  --accent-website: #60a5fa;
+  --accent-document: #f59e0b;
+  --accent-calendar: #fb923c;
+  --accent-check: #f59e0b;
 
-  --code-bg: rgba(0, 0, 0, 0.06);
-  --code-block-bg: #000000;
-  --code-block-ink: #ffffff;
-  --hover-soft: rgba(0, 0, 0, 0.04);
-  --hover-strong: rgba(0, 0, 0, 0.08);
+  --code-bg: rgba(0, 0, 0, 0.05);
+  --code-block-bg: #17171c;
+  --code-block-ink: #f5f5f7;
+  --hover-soft: rgba(0, 0, 0, 0.035);
+  --hover-strong: rgba(0, 0, 0, 0.065);
   --scroll-thumb: rgba(0, 0, 0, 0.18);
   --scroll-thumb-hover: rgba(0, 0, 0, 0.32);
+
+  --radius-card: 12px;
+  --radius-sm: 6px;
 
   color-scheme: light;
 }
 
 :root[data-theme='dark'] {
-  --paper: #0d0d0d;
-  --paper-2: #151515;
-  --canvas: #0a0a0a;
-  --card: #161616;
-  --card-2: #1d1d1d;
+  --paper: #0b0b0e;
+  --paper-2: #111116;
+  --canvas: #08080a;
+  --card: #17171c;
+  --card-2: #1d1d23;
 
-  --ink: #f5f5f5;
-  --ink-2: #cfcfcf;
-  --ink-3: #8f8f8f;
-  --ink-4: #5c5c5c;
+  --ink: #f5f5f7;
+  --ink-2: #d4d4d8;
+  --ink-3: #8e8e95;
+  --ink-4: #58585f;
 
-  --line: rgba(255, 255, 255, 0.08);
-  --line-2: rgba(255, 255, 255, 0.14);
-  --line-3: rgba(255, 255, 255, 0.3);
+  --line: rgba(255, 255, 255, 0.06);
+  --line-2: rgba(255, 255, 255, 0.1);
+  --line-3: rgba(255, 255, 255, 0.22);
 
-  --accent-note: #f5f5f5;
-  --accent-todo: #f5f5f5;
-  --accent-website: #f5f5f5;
-  --accent-document: #f5f5f5;
-  --accent-calendar: #f5f5f5;
+  --accent-note: #60a5fa;
+  --accent-todo: #f472b6;
+  --accent-website: #60a5fa;
+  --accent-document: #f59e0b;
+  --accent-calendar: #fb923c;
+  --accent-check: #f59e0b;
 
-  --code-bg: rgba(255, 255, 255, 0.08);
+  --code-bg: rgba(255, 255, 255, 0.06);
   --code-block-bg: #000000;
-  --code-block-ink: #f5f5f5;
-  --hover-soft: rgba(255, 255, 255, 0.05);
-  --hover-strong: rgba(255, 255, 255, 0.10);
-  --scroll-thumb: rgba(255, 255, 255, 0.18);
-  --scroll-thumb-hover: rgba(255, 255, 255, 0.32);
+  --code-block-ink: #f5f5f7;
+  --hover-soft: rgba(255, 255, 255, 0.04);
+  --hover-strong: rgba(255, 255, 255, 0.08);
+  --scroll-thumb: rgba(255, 255, 255, 0.14);
+  --scroll-thumb-hover: rgba(255, 255, 255, 0.28);
 
   color-scheme: dark;
 }
@@ -88,7 +90,7 @@ body,
 #root {
   height: 100%;
   margin: 0;
-  background: var(--paper);
+  background: var(--canvas);
   color: var(--ink);
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
@@ -111,27 +113,27 @@ body,
   font-family: var(--font-body);
 }
 
-.accent-note {
+.accent-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  flex-shrink: 0;
+}
+.accent-dot-note {
   background: var(--accent-note);
 }
-.accent-todo {
+.accent-dot-todo {
   background: var(--accent-todo);
 }
-.accent-website {
+.accent-dot-website {
   background: var(--accent-website);
 }
-.accent-document {
+.accent-dot-document {
   background: var(--accent-document);
 }
-.accent-calendar {
+.accent-dot-calendar {
   background: var(--accent-calendar);
-}
-
-/* ---- Global sharpen ---- */
-*,
-*::before,
-*::after {
-  border-radius: 0 !important;
 }
 
 /* ---- Note editor ---- */
@@ -145,19 +147,19 @@ body,
 }
 .nook-note h1 {
   font-family: var(--font-display);
-  font-weight: 500;
-  font-size: 1.6rem;
+  font-weight: 600;
+  font-size: 1.5rem;
   letter-spacing: -0.02em;
   margin: 1rem 0 0.45rem;
-  line-height: 1.1;
+  line-height: 1.15;
 }
 .nook-note h2 {
   font-family: var(--font-display);
-  font-weight: 500;
-  font-size: 1.22rem;
+  font-weight: 600;
+  font-size: 1.15rem;
   letter-spacing: -0.015em;
   margin: 0.8rem 0 0.35rem;
-  line-height: 1.2;
+  line-height: 1.25;
 }
 .nook-note ul,
 .nook-note ol {
@@ -177,7 +179,6 @@ body,
   border-left: 2px solid var(--ink-3);
   padding: 0 0 0 0.9rem;
   color: var(--ink-2);
-  font-family: var(--font-display);
   font-style: italic;
   margin: 0.25rem 0 0.7rem 0;
 }
@@ -186,6 +187,7 @@ body,
   padding: 0.05rem 0.35rem;
   font-size: 0.85em;
   font-family: var(--font-mono);
+  border-radius: 4px;
 }
 .nook-note pre {
   background: var(--code-block-bg);
@@ -194,6 +196,7 @@ body,
   overflow-x: auto;
   font-size: 0.82rem;
   line-height: 1.55;
+  border-radius: 8px;
 }
 .nook-note pre code {
   background: transparent;
@@ -297,6 +300,7 @@ body,
 }
 *::-webkit-scrollbar-thumb {
   background: var(--scroll-thumb);
+  border-radius: 999px;
 }
 *::-webkit-scrollbar-thumb:hover {
   background: var(--scroll-thumb-hover);
@@ -305,128 +309,186 @@ body,
   background: transparent;
 }
 
-/* ---- Dockview: editorial, flush, hairline ---- */
+/* ---- Dockview: soft, rounded, modern ---- */
 .dockview-theme-light {
-  --dv-paneview-active-outline-color: var(--ink);
-  --dv-tabs-and-actions-container-font-size: 11px;
-  --dv-tabs-and-actions-container-height: 44px;
-  --dv-tab-font-size: 10.5px;
-  --dv-border-radius: 0px;
+  --dv-paneview-active-outline-color: transparent;
+  --dv-tabs-and-actions-container-font-size: 12px;
+  --dv-tabs-and-actions-container-height: 38px;
+  --dv-tab-font-size: 12px;
+  --dv-border-radius: 10px;
   --dv-tab-margin: 0;
   --dv-drag-over-background-color: var(--hover-strong);
-  --dv-drag-over-border-color: var(--ink);
+  --dv-drag-over-border-color: var(--accent-note);
   --dv-tabs-container-scrollbar-color: var(--scroll-thumb);
   --dv-icon-hover-background-color: var(--hover-soft);
-  --dv-floating-box-shadow: 0 0 0 1px var(--line-2);
+  --dv-floating-box-shadow: 0 0 0 1px var(--line-2), 0 24px 60px rgba(0, 0, 0, 0.25);
   --dv-overlay-z-index: 999;
-  --dv-sash-color: var(--line);
-  --dv-active-sash-color: var(--ink);
-  --dv-active-sash-transition-duration: 0.1s;
-  --dv-active-sash-transition-delay: 0.2s;
+  --dv-sash-color: transparent;
+  --dv-active-sash-color: var(--line-2);
+  --dv-active-sash-transition-duration: 0.12s;
+  --dv-active-sash-transition-delay: 0.15s;
   --dv-scrollbar-background-color: var(--scroll-thumb);
 
   --dv-group-view-background-color: var(--card);
-  --dv-tabs-and-actions-container-background-color: var(--paper-2);
+  --dv-tabs-and-actions-container-background-color: var(--card);
   --dv-activegroup-visiblepanel-tab-background-color: var(--card);
-  --dv-activegroup-hiddenpanel-tab-background-color: var(--paper-2);
-  --dv-inactivegroup-visiblepanel-tab-background-color: var(--card-2);
-  --dv-inactivegroup-hiddenpanel-tab-background-color: var(--paper-2);
-  --dv-tab-divider-color: var(--line);
+  --dv-activegroup-hiddenpanel-tab-background-color: var(--card);
+  --dv-inactivegroup-visiblepanel-tab-background-color: var(--card);
+  --dv-inactivegroup-hiddenpanel-tab-background-color: var(--card);
+  --dv-tab-divider-color: transparent;
   --dv-activegroup-visiblepanel-tab-color: var(--ink);
   --dv-activegroup-hiddenpanel-tab-color: var(--ink-3);
   --dv-inactivegroup-visiblepanel-tab-color: var(--ink-2);
   --dv-inactivegroup-hiddenpanel-tab-color: var(--ink-4);
-  --dv-separator-border: var(--line);
+  --dv-separator-border: transparent;
   --dv-paneview-header-border-color: var(--line);
 }
 
+.dockview-theme-light .dv-groupview {
+  background: var(--canvas);
+  padding: 3px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
 .dockview-theme-light .dv-tabs-and-actions-container {
-  background: var(--paper-2);
-  border-bottom: 1px solid var(--line);
+  background: var(--card);
   padding: 0;
+  box-sizing: border-box;
+  border: 1px solid var(--line-3);
+  border-bottom: 1px solid var(--line-2);
+  border-radius: 12px 12px 0 0;
+  height: 44px !important;
+  transition: border-color 0.14s ease;
+}
+
+.dockview-theme-light .dv-groupview.dv-active-group > .dv-tabs-and-actions-container {
+  border-color: var(--line-3);
+  border-bottom-color: var(--line-2);
 }
 
 .dockview-theme-light .dv-tabs-container {
   gap: 0;
+  padding: 0;
+  align-items: stretch;
+  background: transparent;
+  width: 100%;
+  height: 100%;
 }
 
 .dockview-theme-light .dv-tab {
-  height: 44px;
-  padding: 0 18px;
-  border-radius: 0 !important;
+  height: 100%;
+  padding: 0;
+  border-radius: 0;
   font-family: var(--font-body);
   font-weight: 500;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  font-size: 10px;
+  letter-spacing: -0.005em;
+  text-transform: none;
+  font-size: 14px;
   border-right: 1px solid var(--line);
   transition: background-color 0.14s ease, color 0.14s ease;
   position: relative;
-}
-
-.dockview-theme-light .dv-tab.dv-active-tab {
-  background: var(--card);
+  min-width: 0;
+  flex: 1 1 0;
+  max-width: 320px;
+  background: transparent;
   color: var(--ink);
+  cursor: grab;
 }
 
-.dockview-theme-light .dv-tab.dv-active-tab::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -1px;
-  height: 1px;
-  background: var(--card);
+.dockview-theme-light .dv-tab:last-child { border-right: none; }
+.dockview-theme-light .dv-tab:active { cursor: grabbing; }
+
+.dockview-theme-light .dv-tab.dv-active-tab { background: var(--card); color: var(--ink); }
+.dockview-theme-light .dv-tab.dv-inactive-tab { background: var(--card-2); color: var(--ink-3); }
+.dockview-theme-light .dv-tab.dv-inactive-tab:hover { background: var(--hover-soft); color: var(--ink-2); }
+
+.nook-tab {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 10px 0 16px;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
 }
 
-.dockview-theme-light .dv-groupview.dv-active-group
-  > .dv-tabs-and-actions-container
-  .dv-tab.dv-active-tab::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  height: 1px;
-  background: var(--ink);
+.nook-tab > .accent-dot {
+  flex-shrink: 0;
 }
 
-.dockview-theme-light .dv-tab.dv-inactive-tab {
-  background: var(--paper-2);
+.dockview-theme-light .dv-tab.dv-inactive-tab .nook-tab > .accent-dot {
+  opacity: 0.55;
+}
+
+.nook-tab-title {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  cursor: grab;
+}
+
+.nook-tab-title-empty { color: var(--ink-3); }
+
+.nook-tab-input {
+  flex: 1;
+  min-width: 0;
+  background: transparent;
+  border: none;
+  outline: none;
+  font: inherit;
+  color: var(--ink);
+  padding: 0;
+  cursor: text;
+}
+
+.nook-tab-input::placeholder { color: var(--ink-4); }
+
+.nook-tab-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.nook-tab-meta {
+  font-size: 12px;
   color: var(--ink-3);
+  font-variant-numeric: tabular-nums;
 }
 
-.dockview-theme-light .dv-tab.dv-inactive-tab:hover {
-  background: var(--paper);
-  color: var(--ink-2);
-}
-
-.dockview-theme-light .dv-default-tab-content {
-  font-family: var(--font-body);
-}
-
-.dockview-theme-light .dv-default-tab-action {
-  margin-left: 12px;
-  width: 14px;
-  height: 14px;
+.nook-tab-delete {
+  width: 24px;
+  height: 24px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   opacity: 0;
-  transition: opacity 0.14s ease, background-color 0.14s ease;
-  border-radius: 0 !important;
-}
-.dockview-theme-light .dv-tab:hover .dv-default-tab-action,
-.dockview-theme-light .dv-tab.dv-active-tab .dv-default-tab-action {
-  opacity: 0.5;
-}
-.dockview-theme-light .dv-tab:hover .dv-default-tab-action:hover,
-.dockview-theme-light .dv-tab.dv-active-tab .dv-default-tab-action:hover {
-  opacity: 1;
-  background: var(--hover-strong);
+  transition: opacity 0.14s ease, background-color 0.14s ease, color 0.14s ease;
+  border-radius: 6px;
+  color: var(--ink-4);
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
 }
 
-/* Hide the noisy per-group overflow dropdown; dockview shows it even for single tabs. */
+.dockview-theme-light .dv-tab:hover .nook-tab-delete { opacity: 1; }
+
+.nook-tab-delete:hover {
+  background: var(--hover-strong);
+  color: var(--ink-2);
+}
+
 .dockview-theme-light .dv-tabs-overflow-dropdown-default,
 .dockview-theme-light .dv-pre-actions-container,
 .dockview-theme-light .dv-right-actions-container {
@@ -435,10 +497,22 @@ body,
 
 .dockview-theme-light .dv-groupview > .dv-content-container {
   background: var(--card);
-  border-radius: 0;
-  margin: 0;
+  border: 1px solid var(--line-3);
+  border-top: none;
+  border-radius: 0 0 12px 12px;
   box-shadow: none;
-  border: none;
+  box-sizing: border-box;
+  overflow: hidden;
+  transition: border-color 0.14s ease;
+}
+
+.dockview-theme-light .dv-groupview {
+  border-radius: 12px;
+  transition: box-shadow 0.14s ease;
+}
+
+.dockview-theme-light .dv-groupview.dv-active-group {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
 }
 
 .dockview-theme-light .dv-split-view-container > .dv-sash-container > .dv-sash {
@@ -449,12 +523,23 @@ body,
   background: var(--line-2);
 }
 
-/* ---- Accent dots ---- */
-.accent-dot-note,
-.accent-dot-todo,
-.accent-dot-website,
-.accent-dot-document,
-.accent-dot-calendar {
-  background: var(--ink);
+/* ---- Rounded checkbox (Melo amber) ---- */
+.nook-check {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 1.5px solid var(--line-3);
+  border-radius: 5px;
+  background: transparent;
+  cursor: pointer;
+  transition: background-color 0.12s ease, border-color 0.12s ease;
   display: inline-block;
+  position: relative;
+}
+.nook-check:hover {
+  border-color: var(--ink-3);
+}
+.nook-check:checked {
+  background: var(--accent-check);
+  border-color: var(--accent-check);
 }

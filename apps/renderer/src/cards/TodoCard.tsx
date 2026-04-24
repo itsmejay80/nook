@@ -44,9 +44,6 @@ export function TodoCard({ card }: TodoCardProps) {
     () => [...items].sort((a, b) => a.order - b.order),
     [items],
   );
-  const done = ordered.filter((i) => i.done).length;
-  const total = ordered.length;
-  const pct = total === 0 ? 0 : Math.round((done / total) * 100);
 
   const addItem = () => {
     const text = draft.trim();
@@ -82,34 +79,13 @@ export function TodoCard({ card }: TodoCardProps) {
 
   return (
     <div className="flex h-full min-h-0 flex-col">
-      <div className="relative flex h-9 shrink-0 items-center justify-between border-b border-[var(--line)] bg-[var(--card-2)] px-5">
-        <div className="flex items-baseline gap-2">
-          <span className="font-display text-[15px] font-medium leading-none tracking-[-0.015em] tabular-nums text-[var(--ink)]">
-            {done}
-          </span>
-          <span className="text-[10px] font-medium tracking-[0.22em] text-[var(--ink-4)] uppercase">
-            of {total}
-          </span>
-        </div>
-        <span className="text-[10px] font-medium tracking-[0.22em] text-[var(--ink-3)] tabular-nums uppercase">
-          {pct}%
-        </span>
-        <div
-          className="pointer-events-none absolute bottom-0 left-0 h-px bg-[var(--ink)] transition-[width] duration-300 ease-out"
-          style={{ width: `${pct}%` }}
-        />
-      </div>
-
       <div className="min-h-0 flex-1 overflow-auto">
         {ordered.length === 0 ? (
-          <div className="flex h-full flex-col items-center justify-center gap-3 px-4 py-10">
-            <div className="h-px w-8 bg-[var(--line-3)]" />
-            <div className="text-[10px] font-medium tracking-[0.32em] text-[var(--ink-4)] uppercase">
-              No items yet
-            </div>
+          <div className="flex h-full flex-col items-center justify-center px-4 py-8">
+            <div className="text-[12px] text-[var(--ink-4)]">No items yet</div>
           </div>
         ) : (
-          <ul className="flex flex-col">
+          <ul className="flex flex-col px-2 py-1">
             {ordered.map((item) => (
               <TodoRow
                 key={item.id}
@@ -127,9 +103,12 @@ export function TodoCard({ card }: TodoCardProps) {
         )}
       </div>
 
-      <div className="shrink-0 border-t border-[var(--line)]">
-        <div className="flex items-center gap-3 px-5">
-          <Plus className="h-3.5 w-3.5 shrink-0 text-[var(--ink-4)]" strokeWidth={1.75} />
+      <div className="shrink-0 p-2">
+        <div className="group/add flex items-center gap-2.5 rounded-lg border border-[var(--line)] bg-[var(--paper-2)] px-3 transition-[border-color,box-shadow] focus-within:border-[var(--line-3)] focus-within:bg-[var(--card)] focus-within:shadow-[0_0_0_3px_var(--hover-soft)] hover:border-[var(--line-2)]">
+          <Plus
+            className="h-3.5 w-3.5 shrink-0 text-[var(--ink-4)] transition-colors group-focus-within/add:text-[var(--ink-2)]"
+            strokeWidth={2}
+          />
           <input
             value={draft}
             onChange={(e) => setDraft(e.target.value)}
@@ -139,9 +118,19 @@ export function TodoCard({ card }: TodoCardProps) {
                 addItem();
               }
             }}
-            placeholder="Add item"
-            className="h-11 flex-1 bg-transparent text-[13px] text-[var(--ink)] outline-none placeholder:text-[var(--ink-4)]"
+            placeholder="Add a task"
+            className="h-9 flex-1 bg-transparent text-[13.5px] text-[var(--ink)] outline-none placeholder:text-[var(--ink-4)]"
           />
+          {draft.trim().length > 0 && (
+            <button
+              type="button"
+              onClick={addItem}
+              className="rounded-md px-2 py-1 text-[11px] font-medium text-[var(--ink-3)] transition-colors hover:bg-[var(--hover-strong)] hover:text-[var(--ink)]"
+              aria-label="Add item"
+            >
+              Add
+            </button>
+          )}
         </div>
       </div>
     </div>
@@ -201,22 +190,22 @@ function TodoRow({
         const id = e.dataTransfer.getData('text/plain');
         if (id) onDropOn(id);
       }}
-      className={`group flex items-center gap-3 border-b border-[var(--line)] px-4 py-2.5 ${
+      className={`group flex items-center gap-3 rounded-lg px-3 py-1.5 ${
         dragging ? 'opacity-40' : 'hover:bg-[var(--hover-soft)]'
       }`}
     >
       <GripVertical className="h-3.5 w-3.5 cursor-grab text-[var(--ink-4)] opacity-0 transition-opacity group-hover:opacity-100" />
-      <label className="relative inline-flex h-3.5 w-3.5 shrink-0 items-center justify-center">
+      <label className="relative inline-flex h-[18px] w-[18px] shrink-0 items-center justify-center">
         <input
           type="checkbox"
           checked={item.done}
           onChange={onToggle}
-          className="peer absolute inset-0 cursor-pointer appearance-none border border-[var(--line-3)] bg-transparent transition-colors checked:border-[var(--accent-todo)] checked:bg-[var(--accent-todo)]"
+          className="nook-check absolute inset-0"
         />
         {item.done && (
           <Check
-            className="pointer-events-none relative h-2.5 w-2.5 text-[var(--paper)]"
-            strokeWidth={3}
+            className="pointer-events-none relative h-3 w-3 text-white"
+            strokeWidth={3.5}
           />
         )}
       </label>
@@ -239,7 +228,7 @@ function TodoRow({
         <button
           type="button"
           onClick={() => setEditing(true)}
-          className={`flex-1 text-left text-[13px] ${
+          className={`flex-1 text-left text-[14px] ${
             item.done ? 'text-[var(--ink-4)] line-through' : 'text-[var(--ink)]'
           }`}
         >
@@ -249,7 +238,7 @@ function TodoRow({
       <button
         type="button"
         onClick={onRemove}
-        className="invisible p-1 text-[var(--ink-4)] transition-colors hover:bg-[var(--hover-strong)] hover:text-[var(--ink-2)] group-hover:visible"
+        className="invisible rounded-md p-1 text-[var(--ink-4)] transition-colors hover:bg-[var(--hover-strong)] hover:text-[var(--ink-2)] group-hover:visible"
         aria-label="Delete item"
       >
         <Trash2 className="h-3.5 w-3.5" />
