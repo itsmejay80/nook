@@ -292,12 +292,14 @@ export function Canvas({ spaceId }: CanvasProps) {
   }
 
   return (
-    <DockviewReact
-      className="dockview-theme-light h-full w-full"
-      components={COMPONENTS}
-      defaultTabComponent={CardTab}
-      onReady={onReady}
-    />
+    <div className="nook-canvas-pad h-full w-full">
+      <DockviewReact
+        className="dockview-theme-light h-full w-full"
+        components={COMPONENTS}
+        defaultTabComponent={CardTab}
+        onReady={onReady}
+      />
+    </div>
   );
 }
 
