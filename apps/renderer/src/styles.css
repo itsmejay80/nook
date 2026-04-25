@@ -402,6 +402,19 @@ body,
 .dockview-theme-light .dv-tab.dv-active-tab { background: var(--card); color: var(--ink); }
 .dockview-theme-light .dv-tab.dv-inactive-tab { background: var(--card-2); color: var(--ink-3); }
 .dockview-theme-light .dv-tab.dv-inactive-tab:hover { background: var(--hover-soft); color: var(--ink-2); }
+.dockview-theme-light .dv-groupview.dv-active-group > .dv-tabs-and-actions-container .dv-tabs-container > .dv-tab.dv-active-tab,
+.dockview-theme-light .dv-groupview.dv-inactive-group > .dv-tabs-and-actions-container .dv-tabs-container > .dv-tab.dv-active-tab {
+  background: var(--card);
+  color: var(--ink);
+}
+.dockview-theme-light .dv-groupview.dv-active-group > .dv-tabs-and-actions-container .dv-tabs-container > .dv-tab.dv-inactive-tab {
+  background: var(--card-2);
+  color: var(--ink-3);
+}
+.dockview-theme-light .dv-groupview.dv-inactive-group > .dv-tabs-and-actions-container .dv-tabs-container > .dv-tab.dv-inactive-tab {
+  background: var(--card);
+  color: var(--ink-4);
+}
 
 .nook-tab {
   display: flex;
